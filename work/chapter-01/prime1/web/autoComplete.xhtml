@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>PrimeFaces</title>
+            </f:facet>
+            <style type="text/css">
+                .ui-datalist .ui-datalist-content {
+                    border:0 none
+                }
+
+                .ui-datalist ul {
+                    padding: 0px 10px 0 20px;
+                    margin: 5px 0;
+                }
+
+                .value {
+                    font-weight: bold;
+                }
+
+                .ui-autocomplete-itemtip {
+                    -moz-box-sizing: content-box;
+                    -webkit-box-sizing: content-box;
+                    box-sizing: content-box;
+                }
+            </style>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    Header
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    Footer
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                    <p:menu>
+                        <p:submenu label="Resources">
+                            <p:menuitem value="Demo" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
+                            <p:menuitem value="Documentation" url="http://www.primefaces.org/documentation.html" />
+                            <p:menuitem value="Forum" url="http://forum.primefaces.org/" />
+                            <p:menuitem value="Themes" url="http://www.primefaces.org/themes.html" />
+
+                        </p:submenu>
+
+                    </p:menu>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    Welcome to PrimeFaces
+                    <h:form>
+                        <p:growl id="msgs" showDetail="true" />
+
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <p:outputLabel value="Simple:" for="acSimple" />
+                            <p:autoComplete id="acSimple" value="#{autoCompleteView.txt1}" completeMethod="#{autoCompleteView.completeText}" />
+
+                            <p:outputLabel value="Min Length (3):" for="acMinLength" />
+                            <p:autoComplete id="acMinLength" minQueryLength="3" value="#{autoCompleteView.txt2}" completeMethod="#{autoCompleteView.completeText}" effect="fade" />
+
+                            <p:outputLabel value="Delay(1000):" for="acDelay" />
+                            <p:autoComplete id="acDelay" queryDelay="1000" value="#{autoCompleteView.txt3}" completeMethod="#{autoCompleteView.completeText}" effect="blind" />
+
+                            <p:outputLabel value="Max Results(5):" for="acMaxResults" />
+                            <p:autoComplete id="acMaxResults" maxResults="5" value="#{autoCompleteView.txt4}" completeMethod="#{autoCompleteView.completeText}" />
+
+                            <p:outputLabel value="Force Selection:" for="acForce" />
+                            <p:autoComplete id="acForce" forceSelection="true" value="#{autoCompleteView.txt5}" completeMethod="#{autoCompleteView.completeText}" />
+
+                            <p:outputLabel value="DropDown:" for="dd" />
+                            <p:autoComplete id="dd" dropdown="true" value="#{autoCompleteView.txt6}" completeMethod="#{autoCompleteView.completeText}" />
+
+                            <p:outputLabel value="Cache:" for="cache" />
+                            <p:autoComplete id="cache" cache="true" cacheTimeout="30000" value="#{autoCompleteView.txt7}" completeMethod="#{autoCompleteView.completeText}" />
+
+                            <p:outputLabel value="Select Event:" for="event" />
+                            <p:autoComplete id="event" value="#{autoCompleteView.txt8}" completeMethod="#{autoCompleteView.completeText}">
+                                <p:ajax event="itemSelect" listener="#{autoCompleteView.onItemSelect}" update="msgs" />
+                            </p:autoComplete>
+
+                            <p:outputLabel value="Pojo:" for="themePojo" />
+                            <p:autoComplete id="themePojo" value="#{autoCompleteView.theme1}" completeMethod="#{autoCompleteView.completeTheme}"
+                                            var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" converter="themeConverter" forceSelection="true" />
+
+                            <p:outputLabel value="Custom Content:" for="themeCustom" />
+                            <p:autoComplete id="themeCustom" value="#{autoCompleteView.theme2}" completeMethod="#{autoCompleteView.completeTheme}"
+                                            var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" converter="themeConverter" forceSelection="true">
+                                <p:column>
+                                    <h:graphicImage name="showcase/images/themeswitcher/themeswitcher-#{theme.name}.png" alt="#{theme.name}" styleClass="ui-theme"/>
+                                </p:column>
+
+                                <p:column>
+                                    <h:outputText value="#{theme.displayName}" />
+                                </p:column>
+                            </p:autoComplete>
+
+                            <p:outputLabel value="Multiple:" for="themes" />
+                            <p:autoComplete id="themes" multiple="true" value="#{autoCompleteView.selectedThemes}" completeMethod="#{autoCompleteView.completeTheme}"
+                                            var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" converter="themeConverter" forceSelection="true">
+                                <p:column style="width:10%">
+                                    <h:graphicImage name="showcase/images/themeswitcher/themeswitcher-#{theme.name}.png" alt="#{theme.name}" styleClass="ui-theme"/>
+                                </p:column>
+
+                                <p:column>
+                                    <h:outputText value="#{theme.displayName}" />
+                                </p:column>
+                            </p:autoComplete>
+
+                            <p:outputLabel value="Itemtip:" for="itemTip" />
+                            <p:autoComplete id="itemTip" value="#{autoCompleteView.theme3}" completeMethod="#{autoCompleteView.completeTheme}"
+                                            var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" converter="themeConverter">
+                                <f:facet name="itemtip">
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <f:facet name="header">
+                                            <h:graphicImage name="showcase/images/themeswitcher/themeswitcher-#{theme.name}.png" alt="#{theme.name}" styleClass="ui-theme" />
+                                        </f:facet>
+
+                                        <h:outputText value="Display:" />
+                                        <h:outputText value="#{theme.displayName}" />
+
+                                        <h:outputText value="Key" />
+                                        <h:outputText value="#{theme.name}" />
+                                    </h:panelGrid>
+                                </f:facet>
+                            </p:autoComplete>
+
+                            <p:outputLabel value="Group:" for="group" />
+                            <p:autoComplete id="group" value="#{autoCompleteView.theme4}" completeMethod="#{autoCompleteView.completeThemeContains}"
+                                            var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" converter="themeConverter" forceSelection="true"
+                                            groupBy="#{autoCompleteView.getThemeGroup(theme)}" scrollHeight="250"/>
+                        </h:panelGrid>
+
+                        <p:commandButton value="Submit" icon="pi pi-check" update="output msgs" oncomplete="PF('dlg').show()" />
+
+                        <p:dialog header="Values" resizable="false" showEffect="fade" widgetVar="dlg">
+                            <p:panelGrid id="output" columns="2" columnClasses="label, value">
+                                <h:outputText value="Simple:" />
+                                <h:outputText value="#{autoCompleteView.txt1}" />
+
+                                <h:outputText value="Min Length" />
+                                <h:outputText value="#{autoCompleteView.txt2}" />
+
+                                <h:outputText value="Delay:" />
+                                <h:outputText value="#{autoCompleteView.txt3}" />
+
+                                <h:outputText value="Max Results:" />
+                                <h:outputText value="#{autoCompleteView.txt4}" />
+
+                                <h:outputText value="Force Selection:" />
+                                <h:outputText value="#{autoCompleteView.txt5}" />
+
+                                <h:outputText value="Dropdown:" />
+                                <h:outputText value="#{autoCompleteView.txt6}" />
+
+                                <h:outputText value="Cache:" />
+                                <h:outputText value="#{autoCompleteView.txt7}" />
+
+                                <h:outputText value="Select Event:" />
+                                <h:outputText value="#{autoCompleteView.txt8}" />
+
+                                <h:outputText value="Pojo:" />
+                                <h:outputText value="#{autoCompleteView.theme1}" />
+
+                                <h:outputText value="Custom Content:" />
+                                <h:outputText value="#{autoCompleteView.theme2}" />
+
+                                <h:outputText value="Multiple:" />
+                                <p:dataList value="#{autoCompleteView.selectedThemes}" var="t">
+                                    <h:outputText value="#{t}" />
+                                </p:dataList>
+
+                                <h:outputText value="Itemtip:" />
+                                <h:outputText value="#{autoCompleteView.theme3}" />
+                            </p:panelGrid>
+                        </p:dialog>
+                    </h:form>
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+
