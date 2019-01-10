@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+        <h:form>    
+            <p:growl id="msg" />
+
+            <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+                <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" label="Basic" />
+
+                <p:selectBooleanCheckbox value="#{selectBooleanView.value2}" label="Ajax">
+                    <p:ajax update="msg" listener="#{selectBooleanView.addMessage}" />
+                </p:selectBooleanCheckbox>
+            </h:panelGrid>
+
+            <p:commandButton value="Submit" icon="pi pi-check" update="display" oncomplete="PF('dlg').show()" />
+
+            <p:dialog header="Values" modal="true" resizable="false" showEffect="fade" widgetVar="dlg">
+                <h:panelGrid columns="1" id="display">
+                    <h:outputText value="Value 1: #{selectBooleanView.value1}" />
+                    <h:outputText value="Value 2: #{selectBooleanView.value2}" />
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+    </h:body>
+</html>
+
