@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sofiqul54;
+package com.sofiqul54.calender;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -64,10 +64,10 @@ public class CalenderView {
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
  
-    public void click() {
-        PrimeFaces.current().ajax().update("form:display");
-        PrimeFaces.current().executeScript("PF('dlg').show()");
-    }
+//    public void click() {
+//        PrimeFaces.current().ajax().update("form:display");
+//        PrimeFaces.current().executeScript("PF('dlg').show()");
+//    }
  
     public Date getDate1() {
         return date1;
